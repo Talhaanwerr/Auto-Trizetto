@@ -5,8 +5,8 @@ var macaddress = require('macaddress');
 
 
 
-// const username = prompt('Username: ');
-// const password = prompt('Passowrd: ');
+const username = prompt('Username: ');
+const password = prompt('Passowrd: ');
 
 async function start() {
     var workbookr = new Excel.Workbook();
@@ -38,7 +38,6 @@ async function start() {
             var data = {}
             row = worksheetr.getRow(i + 1);
             const res = await inputPatientData(driver, row.getCell(5).value, row.getCell(4).value, row.getCell(3).value)
-            console.log("ressss: ", res)
             result = await checkEligibility(driver)
             status = result[0];
             dob = result[1];
@@ -170,7 +169,7 @@ async function inputPatientData(driver, ID, lastName, firstName) {
                     // await driver.wait(until.elementLocated(By.xpath("//*[@id='EligibilityRequestTemplateInquiry_EligibilityRequestFieldValues_InsuredLastName']")), 20000).click()
                     await driver.wait(until.elementLocated(By.xpath("//*[@id='EligibilityRequestTemplateInquiry_EligibilityRequestFieldValues_InsuredLastName']")), 20000).sendKeys(lastName, Key.RETURN)
                     // await driver.wait(until.elementLocated(By.xpath("//*[@id='btnUploadButton']")), 20000).click()
-                }, 600);
+                }, 1000);
                 // reject(new Error("Error in input data"))
                 //*[@id='btnUploadButton']/span/span
                 // console.log("IDD: ", ID, lastName, firstName)
@@ -194,8 +193,8 @@ async function login(driver) {
     return new Promise(async (resolve, reject) => {
         try {
             
-            let username = 'Alizah95';//2wt52
-            let password = "DoctorTax@188799"//'Wyoming@17702022';
+            // let username = 'Alizah95';//2wt52
+            // let password = "DoctorTax@188799"//'Wyoming@17702022';
             await driver.get("https://mytools.gatewayedi.com/LogOn");
             await driver.findElement(By.name("UserName")).sendKeys(username)//.sendKeys(username);
             await driver.findElement(By.name("Password")).sendKeys(password, Key.RETURN)//.sendKeys(password, Key.RETURN);
@@ -209,12 +208,10 @@ async function login(driver) {
 
 
 macaddress.one('Ethernet').then(function (mac) {
-    if (mac == "70:5a:0f:cf:93:f8") {
+    
+    if (mac == "18:03:73:c6:84:1c") {
         start();
     }
-    // if (mac == "18:03:73:c6:84:1c") {
-    //     start();
-    // }
     else {
         console.log("not applicable");
     }
